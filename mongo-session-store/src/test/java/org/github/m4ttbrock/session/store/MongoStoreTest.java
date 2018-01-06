@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License.
  */
-package org.hbr.session.store;
+package org.github.m4ttbrock.session.store;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -25,7 +25,7 @@ import org.apache.catalina.Session;
 import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.core.StandardEngine;
 import org.apache.catalina.session.StandardSession;
-import org.hbr.session.manager.MongoPersistentManager;
+import org.github.m4ttbrock.session.manager.MongoPersistentManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -80,7 +80,7 @@ public class MongoStoreTest {
 	}
 
 	/**
-	 * Test method for {@link org.hbr.session.store.MongoStore#getSize()}.
+	 * Test method for {@link MongoStore#getSize()}.
 	 */
 	@Test
 	public void testGetSize() throws Exception {
@@ -89,7 +89,7 @@ public class MongoStoreTest {
 	}
 
 	/**
-	 * Test method for {@link org.hbr.session.store.MongoStore#keys()}.
+	 * Test method for {@link MongoStore#keys()}.
 	 */
 	@Test
 	public void testKeys() throws Exception {
@@ -99,7 +99,7 @@ public class MongoStoreTest {
 	}
 
 	/**
-	 * Test method for {@link org.hbr.session.store.MongoStore#load(java.lang.String)}.
+	 * Test method for {@link MongoStore#load(java.lang.String)}.
 	 */
 	@Test
 	public void testLoadNotFound() throws Exception {
@@ -109,7 +109,7 @@ public class MongoStoreTest {
 	}
 
 	/**
-	 * Test method for {@link org.hbr.session.store.MongoStore#remove(java.lang.String)}.
+	 * Test method for {@link MongoStore#remove(java.lang.String)}.
 	 */
 	@Test
 	public void testRemove() throws Exception {
@@ -118,7 +118,7 @@ public class MongoStoreTest {
 	}
 
 	/**
-	 * Test method for {@link org.hbr.session.store.MongoStore#clear()}.
+	 * Test method for {@link MongoStore#clear()}.
 	 */
 	@Test
 	public void testClear() throws Exception {
@@ -131,8 +131,8 @@ public class MongoStoreTest {
 	}
 
 	/**
-	 * Test method for {@link org.hbr.session.store.MongoStore#save(org.apache.catalina.Session)}.
-	 * and {@link org.hbr.session.store.MongoStore#load(java.lang.String)}
+	 * Test method for {@link MongoStore#save(org.apache.catalina.Session)}.
+	 * and {@link MongoStore#load(java.lang.String)}
 	 */
 	@Test
 	public void testLoadAndSave() throws Exception {

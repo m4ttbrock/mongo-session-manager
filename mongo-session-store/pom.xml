@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.hbr</groupId>
+		<groupId>org.github.m4ttbrock</groupId>
 		<artifactId>mongo-session-manager</artifactId>
 		<version>0.0.9-SNAPSHOT</version>
 	</parent>
@@ -10,22 +10,18 @@
 	<packaging>jar</packaging>
 
 	<name>MongoDB Session Manager Store</name>
-	<url>https://github.com/HBRGTech/mongo-session-manager/tree/master/mongo-session-store</url>
+	<url>https://github.com/m4ttbrock/mongo-session-manager/tree/master/mongo-session-store</url>
 	<description>Tomcat Persistence Session Manager backed by MongoDB.</description>
 	<scm>
-		<connection>scm:git:git@github.com:HBRGTech/mongo-session-manager/mongo-session-store.git</connection>
-		<developerConnection>scm:git:git@github.com:HBRGTech/mongo-session-manager/mongo-session-store.git</developerConnection>
-		<url>scm:git:git@github.com:HBRGTech/mongo-session-manager/mongo-session-manager.git</url>
+		<connection>scm:git:git@github.com:m4ttbrock/mongo-session-manager/mongo-session-store.git</connection>
+		<developerConnection>scm:git:git@github.com:m4ttbrock/mongo-session-manager/mongo-session-store.git</developerConnection>
+		<url>scm:git:git@github.com:m4ttbrock/mongo-session-manager/mongo-session-manager.git</url>
 	  <tag>HEAD</tag>
   </scm>
 	<issueManagement>
-		<url>https://github.com/HBRGTech/mongo-session-manager/issues</url>
-		<system>HBRGTech GitHub Issues</system>
+		<url>https://github.com/m4ttbrock/mongo-session-manager/issues</url>
+		<system>GitHub Issues</system>
 	</issueManagement>
-	<organization>
-		<name>Harvard Business Review</name>
-		<url>http://hbr.org</url>
-	</organization>
 	<licenses>
 		<license>
 			<name>Apache 2</name>
@@ -86,7 +82,7 @@
 			<plugin>
 				<groupId>com.github.joelittlejohn.embedmongo</groupId>
 				<artifactId>embedmongo-maven-plugin</artifactId>
-				<version>0.1.12</version>
+				<version>0.3.4</version>
 				<executions>
 					<execution>
 						<id>start</id>
@@ -95,6 +91,7 @@
 							<goal>start</goal>
 						</goals>
 						<configuration>
+							<version>3.5.5</version>
 							<databaseDirectory>${java.io.tmpdir}/sessiontest</databaseDirectory>
 						</configuration>
 					</execution>

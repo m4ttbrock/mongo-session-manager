@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License.
  */
-package org.hbr.session.store;
+package org.github.m4ttbrock.session.store;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -22,15 +22,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.catalina.Container;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.Loader;
-import org.apache.catalina.Session;
-import org.apache.catalina.Store;
+import org.apache.catalina.*;
 import org.apache.catalina.session.StandardSession;
 import org.apache.catalina.session.StoreBase;
 import org.apache.catalina.util.CustomObjectInputStream;
@@ -43,6 +40,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
+import com.mongodb.MongoCredential;
 import com.mongodb.MongoException;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
@@ -287,7 +285,10 @@ public class MongoStore extends StoreBase {
 		StandardSession session = null;
 		
 		/* get a reference to the container */
-		Container container = manager.getContainer();
+//		Container container = manager.getContainer();
+		/* get a reference to the context */
+		Context context = manager.getContext();
+
 		
 		/* store a reference to the old class loader, as we will change this thread's
 		 * current context if we need to load custom classes
@@ -315,8 +316,8 @@ public class MongoStore extends StoreBase {
 					
 					/* determine which class loader to use when reading the object */
 					Loader loader = null;
-					if (container != null) {
-						loader = container.getLoader();
+					if (context != null) {
+						loader = context.getLoader();
 						if (loader != null) {
 							/* get the class loader for the container */
 							appContextLoader = loader.getClassLoader();
@@ -514,7 +515,19 @@ public class MongoStore extends StoreBase {
         return (storeName);
     }
 	
-	/**
+	private List<ServerAddress> getHostList() {
+		/* build up the host list */
+		List<ServerAddress> hosts = new ArrayList<ServerAddress>();
+		String[] dbHosts = this.hosts.split(",");
+		for(String dbHost: dbHosts) {
+			String[] hostInfo = dbHost.split(":");
+			ServerAddress address = new ServerAddress(hostInfo[0], Integer.parseInt(hostInfo[1]));
+			hosts.add(address);
+		}
+		return hosts;
+	}
+
+    /**
 	 * Create the {@link MongoClient}.
 	 * @throws LifecycleException
 	 */
@@ -538,15 +551,8 @@ public class MongoStore extends StoreBase {
 					.readPreference(readPreference)
 					.build();
 				
-				/* build up the host list */
-				List<ServerAddress> hosts = new ArrayList<ServerAddress>();
-				String[] dbHosts = this.hosts.split(",");
-				for(String dbHost: dbHosts) {
-					String[] hostInfo = dbHost.split(":");
-					ServerAddress address = new ServerAddress(hostInfo[0], Integer.parseInt(hostInfo[1]));
-					hosts.add(address);
-				}
-				
+				List<ServerAddress> hosts = this.getHostList();
+
 				this.manager.getContainer().getLogger().info(getStoreName() + "[" + this.getName() + "]: Connecting to MongoDB [" + this.hosts + "]");
 				
 				/* connect */				
@@ -560,9 +566,13 @@ public class MongoStore extends StoreBase {
 			/* see if we need to authenticate */
 			if (this.username != null || this.password != null) {
 				this.manager.getContainer().getLogger().info(getStoreName() + "[" + this.getName() + "]: Authenticating using [" + this.username + "]");
-				if (!this.db.authenticate(this.username, this.password.toCharArray())) {
-					throw new RuntimeException("MongoDB Authentication Failed");
-				}
+
+				List<ServerAddress> hosts = this.getHostList();
+				MongoCredential credential = MongoCredential.createCredential(this.username, this.dbName, this.password.toCharArray());
+				this.mongoClient = new MongoClient(hosts, Arrays.asList(credential));
+//				if (!this.db.authenticate(this.username, this.password.toCharArray())) {
+//					throw new RuntimeException("MongoDB Authentication Failed");
+//				}
 			}
 			
 			/* get a reference to the collection */
@@ -578,29 +588,29 @@ public class MongoStore extends StoreBase {
 			}
 			
 			/* make sure the last modified and app name indexes exists */			
-			this.collection.ensureIndex(new BasicDBObject(appContextProperty, 1));
+			this.collection.createIndex(new BasicDBObject(appContextProperty, 1));
 			
 			/* determine if we need to expire our db sessions */
 			if (this.timeToLive != -1) {
 				/* use the time to live set */
-				this.collection.ensureIndex(new BasicDBObject(lastModifiedProperty, 1), 
+				this.collection.createIndex(new BasicDBObject(lastModifiedProperty, 1),
 						new BasicDBObject("lastModifiedProperty", this.timeToLive));	
 			} else {
 				/* no custom time to live specified, use the manager's settings */
 				if (this.manager.getMaxInactiveInterval() != -1) {
 					/* create a ttl index on the app property */
-					this.collection.ensureIndex(new BasicDBObject(lastModifiedProperty, 1), 
+					this.collection.createIndex(new BasicDBObject(lastModifiedProperty, 1),
 							new BasicDBObject("lastModifiedProperty", this.manager.getMaxInactiveInterval()));	
 				} else {
 					/* create a regular index */
-					this.collection.ensureIndex(new BasicDBObject(lastModifiedProperty, 1));
+					this.collection.createIndex(new BasicDBObject(lastModifiedProperty, 1));
 				}
 			}
 			
 			this.manager.getContainer().getLogger().info(getStoreName() + "[" + this.getName() + "]: Store ready.");
-		} catch (UnknownHostException uhe) {
-			this.manager.getContainer().getLogger().error("Unable to Connect to MongoDB", uhe);
-			throw new LifecycleException(uhe);
+//		} catch (UnknownHostException uhe) {
+//			this.manager.getContainer().getLogger().error("Unable to Connect to MongoDB", uhe);
+//			throw new LifecycleException(uhe);
 		} catch (MongoException me) {
 			this.manager.getContainer().getLogger().error("Unable to Connect to MongoDB", me);
 			throw new LifecycleException(me);

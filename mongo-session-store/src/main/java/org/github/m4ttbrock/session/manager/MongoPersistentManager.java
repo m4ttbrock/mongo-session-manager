@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License.
  */
-package org.hbr.session.manager;
+package org.github.m4ttbrock.session.manager;
 
 import org.apache.catalina.Manager;
 import org.apache.catalina.session.PersistentManagerBase;
-import org.hbr.session.store.MongoStore;
+import org.github.m4ttbrock.session.store.MongoStore;
 
 /**
  * {@link Manager} implementation that uses a {@link MongoStore}
@@ -42,10 +42,10 @@ public final class MongoPersistentManager extends PersistentManagerBase {
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    @Override
-    public String getInfo() {
-        return (info);
-    }
+//    @Override
+//    public String getInfo() {
+//        return (info);
+//    }
 
     /**
      * Return the descriptive short name of this Manager implementation.

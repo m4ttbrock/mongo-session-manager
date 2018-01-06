@@ -1,28 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.hbr</groupId>
+	<groupId>org.github.m4ttbrock</groupId>
 	<artifactId>mongo-session-manager</artifactId>
 	<version>0.0.9-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>MongoDB Tomcat Session Manager</name>
-	<url>http://github.com/HBRGTech/mongo-session-manager</url>
+	<url>https://github.com/m4ttbrock/mongo-session-manager</url>
 	<description>Tomcat Persistence Session Manager backed by MongoDB.</description>
 	<scm>
-		<connection>scm:git:git@github.com:HBRGTech/mongo-session-manager.git</connection>
-		<developerConnection>scm:git:git@github.com:HBRGTech/mongo-session-manager.git</developerConnection>
-		<url>scm:git:git@github.com:HBRGTech/mongo-session-manager.git</url>
+		<connection>scm:git:git@github.com:m4ttbrock/mongo-session-manager.git</connection>
+		<developerConnection>scm:git:git@github.com:m4ttbrock/mongo-session-manager.git</developerConnection>
+		<url>scm:git:git@github.com:m4ttbrock/mongo-session-manager.git</url>
 	  <tag>HEAD</tag>
   </scm>
 	<issueManagement>
-		<url>https://github.com/HBRGTech/mongo-session-manager/issues</url>
-		<system>HBRGTech GitHub Issues</system>
+		<url>https://github.com/m4ttbrock/mongo-session-manager/issues</url>
+		<system>GitHub Issues</system>
 	</issueManagement>
-	<organization>
-		<name>Harvard Business Review</name>
-		<url>http://hbr.org</url>
-	</organization>
 	<licenses>
 		<license>
 			<name>Apache 2</name>
@@ -31,10 +27,10 @@
 	</licenses>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tomcat.version>7.0.47</tomcat.version>
-		<mongo-java-driver.version>2.11.4</mongo-java-driver.version>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
+		<tomcat.version>8.0.21</tomcat.version>
+		<mongo-java-driver.version>3.6.1</mongo-java-driver.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<github.global.server>github</github.global.server>
 	</properties>
 	<repositories>
@@ -113,7 +109,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
+					<version>3.7.0</version>
 					<configuration>
 						<source>${maven.compiler.source}</source>
 						<target>${maven.compiler.target}</target>
@@ -161,8 +157,4 @@
 			<url>file://${project.build.directory}/mvn-repo</url>
 		</repository>
 	</distributionManagement>
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>http://jenkins-hbrg</url>
-	</ciManagement>
 </project>

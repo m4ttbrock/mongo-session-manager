@@ -21,9 +21,9 @@ This is an Apache Tomcat Persistent Session Manager implementation backed by Mon
 Session Manager's are configured in Tomcat's `server.xml` or an application's `context.xml`.  The `MongoPersistentManager` supports all of the `PersistentManager` attributes.  For more information, please see the [Tomcat Documentation](http://tomcat.apache.org/tomcat-7.0-doc/config/manager.html)
 
 ```xml
-<Manager className="org.hbr.session.manager.MongoPersistentManager"
+<Manager className="org.github.m4ttbrock.session.manager.MongoPersistentManager"
     	distributable="true" maxIdleBackup="30">
-	<Store className="org.hbr.session.store.MongoStore"
+	<Store className="org.github.m4ttbrock.session.store.MongoStore"
 		hosts="localhost:27017"
 		dbName="sessiontest"
 		maxPoolSize="25"

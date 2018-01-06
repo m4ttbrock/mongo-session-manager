@@ -30,9 +30,9 @@
     <!--
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
-    <Manager className="org.hbr.session.manager.MongoPersistentManager"
+    <Manager className="MongoPersistentManager"
     	distributable="true" maxIdleBackup="30">
-    	<Store className="org.hbr.session.store.MongoStore"
+    	<Store className="MongoStore"
 			hosts="localhost:27017"
 			dbName="sessiontest"
 			maxPoolSize="25"			
