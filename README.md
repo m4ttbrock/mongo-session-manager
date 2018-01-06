@@ -9,9 +9,9 @@ This is an Apache Tomcat Persistent Session Manager implementation backed by Mon
 
 ### Requirements
 
-*  Tomcat 7.x (tested with Tomcat 7.0.47)
-*  Java 1.6 or higher (tested with Java 1.7)
-*  MongoDB Driver 2.11 or higher (tested with MongoDB Driver 2.11.4)
+*  Tomcat 8.x (tested with Tomcat 8.0.21)
+*  Java 1.8 or higher (tested with Java 1.8)
+*  MongoDB Driver 3.5.5 or higher (tested with MongoDB Driver 3.5.5)
 
 ### Usage
 
